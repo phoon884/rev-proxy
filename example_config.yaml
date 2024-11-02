@@ -1,19 +1,18 @@
 servers:
-  - name: "I don't know" 
+  - name: "Example Name" 
     port: 8080
     proxy_timeout : 10
-    proxy_buffer_size: "10k"
     rate_limit: 10
-    tcp_proxy_pass: 
-          addresses:
-            - "127.0.0.1:6379"
-          downstream_timeout: 10
-          loadbalancing: "random"
+    # tcp_proxy_pass: 
+    #       addresses:
+    #         - "127.0.0.1:6379"
+    #       downstream_timeout: 10
+    #       loadbalancing: "random"
 
 
     http: true
     endpoints:
-      - name: "/"
+      - name: '/'
         proxy_set_headers:
           - header_name: "name"
             header_value: "value"
@@ -27,3 +26,4 @@ servers:
             interval: 60
             fails: 3
             passes: 1
+log_level: "DEBUG"
