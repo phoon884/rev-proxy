@@ -9,6 +9,7 @@ type Endpoint struct {
 		HeaderValue string `yaml:"header_value"`
 	} `yaml:"proxy_set_headers"`
 	ProxyPass *ProxyPass `yaml:"proxy_pass"`
+	RateLimit float64    `yaml:"rate_limit"`
 }
 
 func (e *Endpoint) Validate() error {

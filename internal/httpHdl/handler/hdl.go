@@ -2,6 +2,7 @@ package handler
 
 import (
 	"bufio"
+	"fmt"
 	"io"
 	"net"
 	"strconv"
@@ -15,7 +16,6 @@ import (
 )
 
 type HTTPHdl struct {
-	rateLimit            int
 	logger               logger.LoggerApplication
 	endpoints            []*Endpoint
 	DownStreamConnection *sync.Map
@@ -34,7 +34,7 @@ func (h *HTTPHdl) HandleConnection(conn net.Conn) {
 		return
 	}
 	address := ""
-	found := false
+	var found bool
 	for _, endpoint := range h.endpoints {
 		result, err := endpoint.ComparePath(message)
 		if err != nil {
@@ -45,6 +45,17 @@ func (h *HTTPHdl) HandleConnection(conn net.Conn) {
 			endpoint.setHeader(message)
 			address = endpoint.GetDownStreamAddr(conn)
 			found = true
+			if endpoint.Ratelimter != nil {
+				clientIp, _, _ := net.SplitHostPort(conn.RemoteAddr().String())
+				if allow, err := endpoint.Ratelimter.Allow(clientIp); !allow {
+					if err != nil {
+						h.handleError(conn, 500, err.Error())
+					} else {
+						h.handleError(conn, 429, fmt.Sprint("rate limit reached"))
+					}
+					return
+				}
+			}
 			break
 		}
 	}
@@ -103,13 +114,11 @@ func (h *HTTPHdl) handleError(conn net.Conn, code int, msg string) {
 
 func NewHTTPHdl(
 	endpoints []*Endpoint,
-	rateLimit int,
 	logger logger.LoggerApplication,
 	downStreamConnection *sync.Map,
 ) *HTTPHdl {
 	return &HTTPHdl{
 		endpoints:            endpoints,
-		rateLimit:            rateLimit,
 		logger:               logger,
 		DownStreamConnection: downStreamConnection,
 	}

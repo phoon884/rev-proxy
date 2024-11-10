@@ -3,7 +3,8 @@ package models
 import "errors"
 
 type Config struct {
-	Servers []Server `yaml:"servers"`
+	Servers  []Server `yaml:"servers"`
+	LogLevel string   `yaml:"log_level"`
 }
 
 func (c *Config) Validate() error {

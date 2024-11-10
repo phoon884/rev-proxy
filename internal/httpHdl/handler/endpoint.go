@@ -6,6 +6,7 @@ import (
 
 	"github.com/phoon884/rev-proxy/internal/httpHdl/healthcheck"
 	"github.com/phoon884/rev-proxy/internal/httpHdl/models"
+	ratelimit "github.com/phoon884/rev-proxy/internal/httpHdl/ratelimit/application"
 	lbPort "github.com/phoon884/rev-proxy/internal/loadbalancing/ports"
 )
 
@@ -15,6 +16,7 @@ type Endpoint struct {
 	proxySetHeaders map[string]string
 	healthChecker   *healthcheck.HttpHealthcheck
 	DownStreamAddr  []string
+	Ratelimter      *ratelimit.Ratelimiter
 }
 
 func (e *Endpoint) setHeader(request *models.HTTPReq) {
@@ -53,6 +55,7 @@ func NewEndpoint(
 	proxySetHeaders map[string]string,
 	downStreamAddr []string,
 	healthChecker *healthcheck.HttpHealthcheck,
+	ratelimiter *ratelimit.Ratelimiter,
 ) *Endpoint {
 	return &Endpoint{
 		regexPath:       regexPath,
@@ -60,5 +63,6 @@ func NewEndpoint(
 		proxySetHeaders: proxySetHeaders,
 		DownStreamAddr:  downStreamAddr,
 		healthChecker:   healthChecker,
+		Ratelimter:      ratelimiter,
 	}
 }

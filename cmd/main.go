@@ -8,9 +8,9 @@ import (
 
 func main() {
 	factory := factories.NewFactory("./config.yaml")
-	logger := factory.InitializeLogger()
-	logger.Info("Service starting...")
 	config, err := factory.InitializeConfigurator().GetConfig()
+	logger := factory.InitializeLogger(config.LogLevel)
+	logger.Info("Service starting...")
 	if err != nil {
 		logger.Error("Configuration error:", err.Error())
 		return

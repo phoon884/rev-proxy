@@ -4,7 +4,6 @@ import (
 	"bufio"
 	"bytes"
 	"errors"
-	"fmt"
 	"io"
 	"strconv"
 	"strings"
@@ -110,6 +109,5 @@ func ParseRes(buffer *bufio.Reader) (*models.HTTPRes, error) {
 	}
 	parsedMsg.Header = header
 
-	fmt.Println("error non")
 	return &parsedMsg, nil
 }

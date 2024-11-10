@@ -2,7 +2,6 @@ package healthcheck
 
 import (
 	"bufio"
-	"fmt"
 	"net"
 	"sync"
 	"sync/atomic"
@@ -68,7 +67,6 @@ func (h *HttpHealthcheck) healthcheck(addr string, status *healthStatus, wg *syn
 		status.Pass += 1
 	} else {
 
-		fmt.Println("dialing")
 		h.logger.Debug("HEALTHCHECK: FAILED", addr)
 		status.Failed += 1
 	}

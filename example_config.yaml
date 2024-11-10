@@ -2,7 +2,6 @@ servers:
   - name: "Example Name" 
     port: 8080
     proxy_timeout : 10
-    rate_limit: 10
     # tcp_proxy_pass: 
     #       addresses:
     #         - "127.0.0.1:6379"
@@ -26,4 +25,5 @@ servers:
             interval: 60
             fails: 3
             passes: 1
+        rate_limit: 5.0
 log_level: "DEBUG"

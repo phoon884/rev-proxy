@@ -1,5 +1,5 @@
 # TCP(+HTTP) Reverse Proxy in GO
-TCP reverse proxy written in go
+TCP reverse proxy written in go trying to keep the project using standard libarary as much as possible
 Features:
 - endpoint routing (HTTP mode)
 - change header (HTTP mode)

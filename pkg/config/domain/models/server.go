@@ -8,7 +8,6 @@ type Server struct {
 	Http            bool       `yaml:"http"`
 	ProxyTimeout    int        `yaml:"proxy_timeout"`
 	ProxyBufferSize string     `yaml:"proxy_buffer_size"`
-	RateLimit       int        `yaml:"rate_limit"`
 	Endpoints       []Endpoint `yaml:"endpoints"`
 	TcpProxyPass    *ProxyPass `yaml:"tcp_proxy_pass"`
 }
