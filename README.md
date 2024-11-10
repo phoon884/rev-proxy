@@ -3,7 +3,7 @@ TCP reverse proxy written in go trying to keep the project using standard libara
 Features:
 - endpoint routing (HTTP mode)
 - change header (HTTP mode)
-- rate limit (HTTP mode) <- NOT DONE
+- rate limit (HTTP mode) 
 - loadbalancing (Random, IP hashing, least-connection, round-robin)
 - healthcheck (no self healing) 
 
